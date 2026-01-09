@@ -1,0 +1,729 @@
+///////////// JSX File ////////////////////
+import { useState } from 'react'
+import './BlogPage.css'
+
+const sampleBlog = {
+  id: 1,
+  title: 'The Art of Mindful Writing: Finding Your Authentic Voice',
+  description: 'Discover how to tap into your unique perspective and write with purpose. This comprehensive guide walks you through the journey of finding your authentic voice in a world full of noise.',
+  image: 'https://images.pexels.com/photos/3636136/pexels-photo-3636136.jpeg?auto=compress&cs=tinysrgb&w=800',
+  category: 'Writing Tips',
+  author: 'Sarah Chen',
+  authorImage: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
+  date: 'November 10, 2024',
+  likes: 2847,
+  comments: [
+    {
+      id: 1,
+      author: 'Emily Rodriguez',
+      authorImage: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400',
+      text: 'This article completely changed my perspective on writing. The section about finding your voice was incredibly insightful!',
+      date: '2 days ago',
+      likes: 124,
+    },
+    {
+      id: 2,
+      author: 'James Wilson',
+      authorImage: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400',
+      text: 'Great practical tips. I especially loved the exercises at the end of each section.',
+      date: '1 day ago',
+      likes: 89,
+    },
+  ],
+}
+
+function BlogPage() {
+  const [isLiked, setIsLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState(sampleBlog.likes)
+  const [comments, setComments] = useState(sampleBlog.comments)
+  const [newComment, setNewComment] = useState('')
+  const [showCommentForm, setShowCommentForm] = useState(false)
+
+  const handleLike = () => {
+    setIsLiked(!isLiked)
+    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1)
+  }
+
+  const handleCommentSubmit = (e) => {
+    e.preventDefault()
+    if (newComment.trim()) {
+      const comment = {
+        id: comments.length + 1,
+        author: 'You',
+        authorImage: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
+        text: newComment,
+        date: 'just now',
+        likes: 0,
+      }
+      setComments([comment, ...comments])
+      setNewComment('')
+      setShowCommentForm(false)
+    }
+  }
+
+  return (
+    <div className="blog-page">
+      <article className="blog-article">
+        <div className="blog-header">
+          <div className="blog-category">{sampleBlog.category}</div>
+          <h1 className="blog-title">{sampleBlog.title}</h1>
+          <div className="blog-meta">
+            <div className="author-info">
+              <img src={sampleBlog.authorImage} alt={sampleBlog.author} className="author-avatar" />
+              <div>
+                <p className="author-name">{sampleBlog.author}</p>
+                <p className="blog-date">{sampleBlog.date}</p>
+              </div>
+            </div>
+            <div className="blog-stats">
+              <span className="stat">{likeCount} likes</span>
+              <span className="stat">{comments.length} comments</span>
+            </div>
+          </div>
+        </div>
+
+        <img src={sampleBlog.image} alt={sampleBlog.title} className="blog-hero-image" />
+
+        <div className="blog-content">
+          <p className="blog-intro">{sampleBlog.description}</p>
+
+          <h2>The Journey Begins</h2>
+          <p>
+            Writing is not just about putting words on a page. It's about connecting with your readers on a deeper level, sharing your unique perspective, and creating content that resonates with their hearts and minds. Many writers struggle with finding their authentic voice because they're too focused on what they think their audience wants to hear.
+          </p>
+
+          <h2>Understanding Your Authentic Voice</h2>
+          <p>
+            Your authentic voice is the unique combination of your experiences, values, perspectives, and personality that shines through in your writing. It's what makes your work distinctly yours. When you write with your authentic voice, your words carry more power and your readers can sense the genuine intention behind them.
+          </p>
+          <p>
+            The key is to stop trying to sound like someone else. Instead, embrace your quirks, your perspectives, and your unique way of seeing the world. Your readers will appreciate the honesty and vulnerability you bring to your writing.
+          </p>
+
+          <h2>Practical Steps to Find Your Voice</h2>
+          <p>
+            Start by reading widely across different genres and authors. Pay attention to what resonates with you and why. Notice the patterns in the writing that speaks to you. Then, begin experimenting with your own writing style. Don't be afraid to take risks and try new approaches.
+          </p>
+          <p>
+            Write regularly, even if it's just for yourself. The more you write, the more your natural voice will emerge. Over time, you'll develop a distinctive style that's uniquely yours.
+          </p>
+
+          <div className="blog-actions">
+            <button
+              className={`like-button ${isLiked ? 'liked' : ''}`}
+              onClick={handleLike}
+            >
+              <span className="heart-icon">♥</span>
+              <span>{isLiked ? 'Liked' : 'Like'}</span>
+            </button>
+            <button
+              className="comment-button"
+              onClick={() => setShowCommentForm(!showCommentForm)}
+            >
+              <span>Comment</span>
+            </button>
+            <button className="share-button">
+              <span>Share</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <aside className="blog-sidebar">
+        <div className="author-card">
+          <img src={sampleBlog.authorImage} alt={sampleBlog.author} className="author-card-image" />
+          <h3 className="author-card-name">{sampleBlog.author}</h3>
+          <p className="author-card-bio">
+            A passionate writer and storyteller dedicated to helping others find their authentic voice through the power of words.
+          </p>
+          <button className="follow-button">Follow</button>
+        </div>
+
+        <div className="related-posts">
+          <h3 className="related-posts-title">Related Articles</h3>
+          <ul className="related-posts-list">
+            <li><a href="#related">The Power of Storytelling in Modern Writing</a></li>
+            <li><a href="#related">How to Overcome Writer's Block</a></li>
+            <li><a href="#related">Building Your Reader Community</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <section className="comments-section">
+        <div className="comments-container">
+          <h2 className="comments-title">Comments ({comments.length})</h2>
+
+          {showCommentForm && (
+            <form className="comment-form" onSubmit={handleCommentSubmit}>
+              <div className="comment-form-header">
+                <img
+                  src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400"
+                  alt="You"
+                  className="comment-avatar"
+                />
+                <div className="comment-form-inputs">
+                  <textarea
+                    className="comment-textarea"
+                    placeholder="Share your thoughts..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    rows="3"
+                  />
+                  <div className="comment-form-actions">
+                    <button type="submit" className="comment-submit-btn">Post Comment</button>
+                    <button
+                      type="button"
+                      className="comment-cancel-btn"
+                      onClick={() => setShowCommentForm(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          )}
+
+          {!showCommentForm && (
+            <button
+              className="add-comment-btn"
+              onClick={() => setShowCommentForm(true)}
+            >
+              Add a comment...
+            </button>
+          )}
+
+          <div className="comments-list">
+            {comments.map((comment) => (
+              <div key={comment.id} className="comment">
+                <img src={comment.authorImage} alt={comment.author} className="comment-avatar" />
+                <div className="comment-content">
+                  <div className="comment-header">
+                    <h4 className="comment-author">{comment.author}</h4>
+                    <span className="comment-date">{comment.date}</span>
+                  </div>
+                  <p className="comment-text">{comment.text}</p>
+                  <div className="comment-actions">
+                    <button className="comment-like-btn">♥ {comment.likes} Like</button>
+                    <button className="comment-reply-btn">Reply</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+export default BlogPage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////// CSS File ///////////////////////////
+
+.blog-page {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.blog-page > * {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.blog-article {
+  margin-bottom: 4rem;
+}
+
+.blog-header {
+  margin-bottom: 3rem;
+}
+
+.blog-category {
+  display: inline-block;
+  background-color: #fda4af;
+  color: #000000;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.blog-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #000000;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  letter-spacing: -1px;
+}
+
+.blog-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.blog-date {
+  font-size: 0.9rem;
+  color: #737373;
+  margin: 0;
+}
+
+.blog-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  font-size: 0.95rem;
+  color: #525252;
+  font-weight: 500;
+}
+
+.blog-hero-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin: 2rem 0;
+}
+
+.blog-content {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: #333333;
+}
+
+.blog-intro {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #525252;
+  margin-bottom: 2rem;
+}
+
+.blog-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+  margin: 2.5rem 0 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.blog-content p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.blog-actions {
+  display: flex;
+  gap: 1.5rem;
+  margin: 3rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.like-button,
+.comment-button,
+.share-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #f5f5f5;
+  color: #000000;
+  border: 2px solid transparent;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.like-button:hover,
+.comment-button:hover,
+.share-button:hover {
+  background-color: #e5e5e5;
+  border-color: #000000;
+}
+
+.like-button.liked {
+  background-color: #fda4af;
+  color: #000000;
+  border-color: #fda4af;
+}
+
+.heart-icon {
+  font-size: 1.2rem;
+}
+
+.blog-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.author-card {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  border: 1px solid #e5e5e5;
+}
+
+.author-card-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.author-card-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.author-card-bio {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #525252;
+  margin-bottom: 1.5rem;
+}
+
+.follow-button {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.follow-button:hover {
+  background-color: #fda4af;
+  color: #000000;
+}
+
+.related-posts {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e5e5;
+}
+
+.related-posts-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1.5rem;
+}
+
+.related-posts-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.related-posts-list li a {
+  color: #000000;
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+  display: block;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+.related-posts-list li a:hover {
+  color: #fda4af;
+  background-color: #ffffff;
+}
+
+.comments-section {
+  background-color: #fafafa;
+  padding: 3rem;
+  border-radius: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.comments-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.comments-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 2rem;
+}
+
+.add-comment-btn {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  color: #525252;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.add-comment-btn:hover {
+  border-color: #000000;
+  background-color: #f5f5f5;
+}
+
+.comment-form {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 2rem;
+}
+
+.comment-form-header {
+  display: flex;
+  gap: 1rem;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.comment-form-inputs {
+  flex: 1;
+}
+
+.comment-textarea {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.comment-textarea:focus {
+  outline: none;
+  border-color: #000000;
+}
+
+.comment-form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.comment-submit-btn {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.comment-submit-btn:hover {
+  background-color: #fda4af;
+  color: #000000;
+}
+
+.comment-cancel-btn {
+  background-color: transparent;
+  color: #525252;
+  border: 1px solid #e5e5e5;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.comment-cancel-btn:hover {
+  border-color: #000000;
+  color: #000000;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.comment {
+  display: flex;
+  gap: 1rem;
+}
+
+.comment-content {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e5e5;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.comment-author {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.comment-date {
+  font-size: 0.85rem;
+  color: #737373;
+}
+
+.comment-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333333;
+  margin-bottom: 1rem;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.comment-like-btn,
+.comment-reply-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 0.85rem;
+  color: #525252;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0;
+}
+
+.comment-like-btn:hover,
+.comment-reply-btn:hover {
+  color: #fda4af;
+}
+
+@media (max-width: 768px) {
+  .blog-page {
+    padding: 1rem;
+  }
+
+  .blog-title {
+    font-size: 2.5rem;
+  }
+
+  .blog-hero-image {
+    height: 300px;
+  }
+
+  .blog-content {
+    font-size: 1rem;
+  }
+
+  .blog-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .blog-meta {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .blog-actions {
+    flex-direction: column;
+  }
+
+  .like-button,
+  .comment-button,
+  .share-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .comments-section {
+    padding: 1.5rem;
+  }
+
+  .comment-form-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comment-avatar {
+    width: 32px;
+    height: 32px;
+  }
+}
