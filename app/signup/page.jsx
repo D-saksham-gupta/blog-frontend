@@ -1,7 +1,16 @@
 "use client";
 //import { BACKEND_URL, WS_URL } from "@/config";
 //import axios from "axios";
-import { ArrowRight, Lock, Mail, Pencil, User, X } from "lucide-react";
+import {
+  ArrowRight,
+  Eye,
+  EyeClosed,
+  Lock,
+  Mail,
+  Pencil,
+  User,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,6 +30,7 @@ export default function signup() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { signup, user } = useAuth();
 
@@ -101,14 +111,25 @@ export default function signup() {
             </div>
             <div className="space-y-2">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 name="password"
                 value={values.password}
                 onChange={(e) => handleChange(e)}
-                className="w-full px-4 py-3 rounded-lg bg-black border border-neutral-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full px-4 py-3 rounded-lg bg-black border border-neutral-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors pr-12"
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white z-50"
+              >
+                {showPassword ? (
+                  <EyeClosed className="w-5 h-5 z-9999" />
+                ) : (
+                  <Eye className="w-5 h-5 z-9999" />
+                )}
+              </button>
             </div>
             <button
               type="submit"
