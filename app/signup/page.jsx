@@ -122,7 +122,7 @@ export default function signup() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white z-50"
+                className="text-neutral-400 hover:text-white z-50 p-4"
               >
                 {showPassword ? (
                   <EyeClosed className="w-5 h-5 z-9999" />
