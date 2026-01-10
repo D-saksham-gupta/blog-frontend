@@ -366,7 +366,7 @@ const page = () => {
                 className="comment-button"
                 onClick={() => setShowCommentForm(!showCommentForm)}
               >
-                <span>💬 Comment</span>
+                <a href="#comment"><span>💬 Comment</span></a>
               </button>
             )}
             {blog.status === "published" && (
@@ -417,7 +417,7 @@ const page = () => {
       </aside>
 
       {blog.status === "published" && (
-        <section className="comments-section">
+        <section id="comment" className="comments-section">
           <div className="comments-container">
             <h2 className="comments-title">Comments ({blog.commentsCount})</h2>
 
