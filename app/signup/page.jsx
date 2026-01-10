@@ -109,7 +109,7 @@ export default function signup() {
                 className="w-full px-4 py-3 rounded-lg bg-black border border-neutral-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 flex justify-between">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
