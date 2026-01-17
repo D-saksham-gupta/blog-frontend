@@ -63,9 +63,9 @@ export default function AdminDashboard() {
     return null;
   }
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
